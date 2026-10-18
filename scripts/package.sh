@@ -1,11 +1,11 @@
 #!/bin/bash
-# Builds a universal (Apple silicon + Intel) app bundle and a DMG:  dist/主畫面整理.app, dist/Homescreen-mac.dmg
+# Builds a universal (Apple silicon + Intel) app bundle and a DMG:  dist/Homescreen Organizer.app, dist/Homescreen-mac.dmg
 # Works with just the Command Line Tools; full Xcode is not needed.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
 VERSION=$(cat VERSION)
-NAME="主畫面整理"
+NAME="Homescreen Organizer"
 APP="dist/$NAME.app"
 
 BUILD=(swift build -c release --arch arm64 --arch x86_64)
@@ -17,6 +17,7 @@ cp "$BIN" "$APP/Contents/MacOS/Homescreen"
 [ "$(lipo -archs "$APP/Contents/MacOS/Homescreen")" = "x86_64 arm64" ] || { echo "not a universal binary"; exit 1; }
 sed "s/__VERSION__/$VERSION/g" Resources/Info.plist > "$APP/Contents/Info.plist"
 cp Resources/bmc-button.png "$APP/Contents/Resources/"
+cp -R Resources/*.lproj "$APP/Contents/Resources/"  # English (default) and Traditional Chinese
 
 # App icon: every size macOS asks for, from the 1024px master
 ICONSET=$(mktemp -d)/AppIcon.iconset

@@ -46,32 +46,32 @@ struct Plan {
 }
 
 enum Layout {
-    // Apple apps sometimes come without a displayName
+    // Apple apps sometimes come without a displayName. Names are English keys, localized with L().
     static let appleNames = [
-        "com.apple.MobileSMS": "訊息", "com.apple.mobilephone": "電話", "com.apple.mobilesafari": "Safari", "com.apple.Music": "音樂",
-        "com.apple.mobilemail": "郵件", "com.apple.mobilecal": "行事曆", "com.apple.mobileslideshow": "照片", "com.apple.camera": "相機",
-        "com.apple.weather": "天氣", "com.apple.mobilenotes": "備忘錄", "com.apple.Preferences": "設定", "com.apple.AppStore": "App Store",
-        "com.apple.facetime": "FaceTime", "com.apple.mobiletimer": "時鐘", "com.apple.reminders": "提醒事項", "com.apple.Maps": "地圖",
+        "com.apple.MobileSMS": "Messages", "com.apple.mobilephone": "Phone", "com.apple.mobilesafari": "Safari", "com.apple.Music": "Music",
+        "com.apple.mobilemail": "Mail", "com.apple.mobilecal": "Calendar", "com.apple.mobileslideshow": "Photos", "com.apple.camera": "Camera",
+        "com.apple.weather": "Weather", "com.apple.mobilenotes": "Notes", "com.apple.Preferences": "Settings", "com.apple.AppStore": "App Store",
+        "com.apple.facetime": "FaceTime", "com.apple.mobiletimer": "Clock", "com.apple.reminders": "Reminders", "com.apple.Maps": "Maps",
     ]
     // Readable names for Apple's own widgets, keyed by the last part of the app's bundle id.
     static let appleWidgets = [
-        "batteries": "電池", "weather": "天氣", "mobilecal": "行事曆", "mobiletimer": "時鐘", "mobileslideshow": "照片", "reminders": "提醒事項",
-        "maps": "地圖", "news": "新聞", "stocks": "股市", "fitness": "健身", "health": "健康", "mobilenotes": "備忘錄", "findmy": "尋找",
-        "music": "音樂", "podcasts": "Podcast", "home": "家庭", "shortcuts": "捷徑", "tips": "提示", "screentimewidgetapplication": "螢幕使用時間",
-        "mobilesafari": "Safari", "files": "檔案", "tv": "TV", "journal": "手記", "contacts": "聯絡人", "mobilemail": "郵件", "sleep": "睡眠",
+        "batteries": "Batteries", "weather": "Weather", "mobilecal": "Calendar", "mobiletimer": "Clock", "mobileslideshow": "Photos", "reminders": "Reminders",
+        "maps": "Maps", "news": "News", "stocks": "Stocks", "fitness": "Fitness", "health": "Health", "mobilenotes": "Notes", "findmy": "Find My",
+        "music": "Music", "podcasts": "Podcasts", "home": "Home", "shortcuts": "Shortcuts", "tips": "Tips", "screentimewidgetapplication": "Screen Time",
+        "mobilesafari": "Safari", "files": "Files", "tv": "TV", "journal": "Journal", "contacts": "Contacts", "mobilemail": "Mail", "sleep": "Sleep",
     ]
 
     /// The phone's reply as an icon state. Refuses anything unexpected rather than silently dropping icons.
     static func parse(_ plist: Any) throws -> IconState {
-        guard let pages = plist as? [[Any]] else { throw DeviceError("iPhone 回傳的主畫面格式不符。") }
+        guard let pages = plist as? [[Any]] else { throw DeviceError(L("The iPhone returned an unexpected home screen format.")) }
         return try pages.map { page in
-            try page.map { guard let item = $0 as? Item else { throw DeviceError("iPhone 回傳的主畫面格式不符。") }; return item }
+            try page.map { guard let item = $0 as? Item else { throw DeviceError(L("The iPhone returned an unexpected home screen format.")) }; return item }
         }
     }
 
     static func bundleId(_ i: Item) -> String? { i["bundleIdentifier"] as? String }
     static func displayName(_ i: Item) -> String? { (i["displayName"] as? String).flatMap { $0.isEmpty ? nil : $0 } }
-    static func key(_ i: Item) -> String { displayName(i) ?? bundleId(i).flatMap { appleNames[$0] ?? $0 } ?? "?" }
+    static func key(_ i: Item) -> String { displayName(i) ?? bundleId(i).flatMap { appleNames[$0].map(L) ?? $0 } ?? "?" }
     static func isFolder(_ i: Item) -> Bool { i["listType"] as? String == "folder" }
     static func lists(_ i: Item) -> [[Item]]? { (i["iconLists"] as? [[Any]])?.map { $0.compactMap { $0 as? Item } } }
     static func members(_ f: Item) -> [Item] { (lists(f) ?? []).flatMap { $0 } }
@@ -103,7 +103,7 @@ enum Layout {
     private static func widgetTile(_ x: Item, _ names: [String: String], stack: Bool = false) -> Tile {
         let app = container(x)
         let last = app.split(separator: ".").last.map(String.init) ?? ""
-        return Tile(kind: .widget, name: names[app] ?? appleWidgets[last.lowercased()] ?? prettify(last), bundleId: app,
+        return Tile(kind: .widget, name: names[app] ?? appleWidgets[last.lowercased()].map(L) ?? prettify(last), bundleId: app,
                     size: gridSize(x), stack: stack)
     }
 
@@ -117,7 +117,7 @@ enum Layout {
     }
     private static func tile(_ it: Item, _ names: [String: String]) -> Tile {
         if isFolder(it) {
-            return Tile(kind: .folder, name: displayName(it) ?? "資料夾", apps: members(it).map { AppRef(name: key($0), bundleId: bundleId($0)) })
+            return Tile(kind: .folder, name: displayName(it) ?? L("Folder"), apps: members(it).map { AppRef(name: key($0), bundleId: bundleId($0)) })
         }
         if isStack(it) {
             var first = members(it).first ?? [:]
@@ -129,7 +129,7 @@ enum Layout {
     }
     static func pages(_ state: IconState) -> [Page] {
         let names = appNames(state)
-        return state.enumerated().map { i, p in Page(id: i, title: i == 0 ? "Dock" : "第 \(i) 頁", tiles: p.map { tile($0, names) }) }
+        return state.enumerated().map { i, p in Page(id: i, title: i == 0 ? "Dock" : L("Page %ld", i), tiles: p.map { tile($0, names) }) }
     }
     static func bundleIds(_ pages: [Page]) -> [String] {
         var ids: [String] = [], seen = Set<String>()
@@ -156,7 +156,7 @@ enum Layout {
                         key: n > 1 ? "\(name)#\(n)" : name, name: name, bundleId: bundleId(x), origin: folder, page: pi + 1,
                         // widgets, stacks and other non-app tiles stay where they are
                         movable: bundleId(x) != nil && !isWidget(x) && !isStack(x),
-                        location: "第 \(pi + 1) 頁" + (folder.map { " / \($0)" } ?? ""), raw: x))
+                        location: L("Page %ld", pi + 1) + (folder.map { " / \($0)" } ?? ""), raw: x))
                 }
             }
         }
@@ -173,8 +173,8 @@ enum Layout {
         }
         var used = Set<String>()
         func take(_ k: String) throws -> Item {
-            guard let it = pool[k] else { throw DeviceError("找不到 App：\(k)") }
-            guard used.insert(k).inserted else { throw DeviceError("App 重複出現：\(k)") }
+            guard let it = pool[k] else { throw DeviceError(L("App not found: %@", k)) }
+            guard used.insert(k).inserted else { throw DeviceError(L("App appears twice: %@", k)) }
             return it.raw
         }
         var tiles: [Item] = []

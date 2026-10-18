@@ -37,7 +37,7 @@ final class AppModel: ObservableObject {
             Task { @MainActor in self?.detected = DeviceWatcher.shared.devices.keys.sorted().first }
         }
         DeviceWatcher.shared.start()
-        if !MD.available { error = "找不到 Apple 的 MobileDevice 元件，請確認這是 macOS 13 以上的版本。" }
+        if !MD.available { error = L("Apple’s MobileDevice component was not found. This app needs macOS 13 or later.") }
     }
 
     var isRead: Bool { state != nil }
@@ -53,10 +53,10 @@ final class AppModel: ObservableObject {
                 tiles.filter { $0.kind == .widget }.count, homePages.count)
     }
     var scopeLabel: String {
-        let on = homePages.filter { scope.contains($0.id) }.map(\.title)
-        let off = homePages.filter { !scope.contains($0.id) }.map(\.title)
-        if on.isEmpty { return "請先在選項裡選擇要整理的頁面。" }
-        return "會整理\(on.joined(separator: "、"))" + (off.isEmpty ? "。" : "，\(off.joined(separator: "、"))保持原樣。")
+        let list = { (pages: [Page]) in ListFormatter.localizedString(byJoining: pages.map(\.title)) }
+        let on = homePages.filter { scope.contains($0.id) }, off = homePages.filter { !scope.contains($0.id) }
+        if on.isEmpty { return L("Choose the pages to organize in Options first.") }
+        return off.isEmpty ? L("Organizes %@.", list(on)) : L("Organizes %@; %@ stay as they are.", list(on), list(off))
     }
     func icon(_ id: String?) -> NSImage? { id.flatMap { icons[$0] } }
 
@@ -70,7 +70,7 @@ final class AppModel: ObservableObject {
 
     private func device() throws -> MD.Ref {
         guard let udid = detected, let ref = DeviceWatcher.shared.devices[udid] else {
-            throw DeviceError("沒偵測到 iPhone：請用 USB 線連接並解鎖手機（Wi-Fi 不行）。")
+            throw DeviceError(L("No iPhone found. Connect it with a USB cable and unlock it (Wi-Fi does not work)."))
         }
         return ref
     }
@@ -83,7 +83,7 @@ final class AppModel: ObservableObject {
     }
 
     func read() async {
-        await run("正在讀取 iPhone 和 App 圖示…") {
+        await run(L("Reading your iPhone and app icons…")) {
             let known = Set(icons.keys)
             let (st, name, pngs) = try await Device.session(try device()) { d in
                 let st = try d.iconState()
@@ -105,7 +105,7 @@ final class AppModel: ObservableObject {
 
     private func saveBackup(_ st: IconState) throws {
         let dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("主畫面整理/backups", isDirectory: true)
+            .appendingPathComponent("Homescreen Organizer/backups", isDirectory: true)
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         let stamp = ISO8601DateFormatter().string(from: Date()).replacingOccurrences(of: ":", with: "-")
         let file = dir.appendingPathComponent("backup-\(stamp).plist")
@@ -123,7 +123,7 @@ final class AppModel: ObservableObject {
 
     func generate() async {
         if meta == nil {
-            busy = "正在查詢 App Store 類型…"
+            busy = L("Looking up App Store categories…")
             while loadingMeta { try? await Task.sleep(nanoseconds: 100_000_000) }
             if meta == nil { await loadMeta() }
             busy = nil
@@ -133,14 +133,14 @@ final class AppModel: ObservableObject {
         edited = false
         showOptions = false
         screen = .new
-        if again { notify("已重新依類型分類") }
+        if again { notify(L("Sorted by category again")) }
     }
 
     func apply() async {
         let plan = Plan(folders: folders.filter { !$0.apps.isEmpty }.map {
-            Folder(name: $0.name.trimmingCharacters(in: .whitespaces).isEmpty ? "未命名" : $0.name, apps: $0.apps)
+            Folder(name: $0.name.trimmingCharacters(in: .whitespaces).isEmpty ? L("Untitled") : $0.name, apps: $0.apps)
         }, keepPages: keepPages)
-        await run("正在寫入 iPhone…") {
+        await run(L("Writing to your iPhone…")) {
             let known = Set(icons.keys)
             let (st, pngs) = try await Device.session(try device()) { d in
                 let next = try Layout.build(try d.iconState(), plan)  // build on the phone's latest state, not a stale copy
@@ -155,8 +155,8 @@ final class AppModel: ObservableObject {
     }
 
     func restore() async {
-        await run("正在還原…") {
-            guard let file = backup else { throw DeviceError("這次還沒讀取過手機，沒有備份可以還原。") }
+        await run(L("Restoring…")) {
+            guard let file = backup else { throw DeviceError(L("Nothing to restore yet. Read your iPhone first.")) }
             let saved = try Layout.parse(PropertyListSerialization.propertyList(from: Data(contentsOf: file), format: nil))
             let st = try await Device.session(try device()) { d in
                 try d.setIconState(saved)
@@ -164,7 +164,7 @@ final class AppModel: ObservableObject {
             }
             afterWrite(st, [:])
             applied = false
-            notify("已還原成原本的排版")
+            notify(L("Restored the original layout"))
         }
     }
 
@@ -187,16 +187,17 @@ final class AppModel: ObservableObject {
     }
 
     func addFolder() {
-        folders.append(Folder(name: "新資料夾", apps: []))
+        folders.append(Folder(name: L("New Folder"), apps: []))
         edited = true
     }
 
     func removeFolder(_ index: Int) {
         let gone = folders.remove(at: index)
         if !gone.apps.isEmpty {
-            if let i = folders.firstIndex(where: { $0.name == "其他" }) { folders[i].apps += gone.apps }
-            else { folders.append(Folder(name: "其他", apps: gone.apps)) }
-            notify("「\(gone.name)」裡的 App 已移到「其他」")
+            let other = Grouping.other
+            if let i = folders.firstIndex(where: { $0.name == other }) { folders[i].apps += gone.apps }
+            else { folders.append(Folder(name: other, apps: gone.apps)) }
+            notify(L("Apps from “%@” moved to “%@”", gone.name, other))
         }
         edited = true
     }

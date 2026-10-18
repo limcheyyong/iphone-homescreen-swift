@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleName</key>
-	<string>主畫面整理</string>
+	<string>Homescreen Organizer</string>
 	<key>CFBundleDisplayName</key>
-	<string>主畫面整理</string>
+	<string>Homescreen Organizer</string>
+	<key>LSHasLocalizedDisplayName</key>
+	<true/>
 	<key>CFBundleExecutable</key>
 	<string>Homescreen</string>
 	<key>CFBundleIdentifier</key>
@@ -19,7 +21,12 @@
 	<key>CFBundleVersion</key>
 	<string>__VERSION__</string>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>zh_TW</string>
+	<string>en</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>zh-Hant</string>
+	</array>
 	<key>LSMinimumSystemVersion</key>
 	<string>13.0</string>
 	<key>LSApplicationCategoryType</key>
@@ -27,6 +34,6 @@
 	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>免費使用。與 Apple Inc. 無關。</string>
+	<string>Free to use. Not affiliated with Apple Inc.</string>
 </dict>
 </plist>

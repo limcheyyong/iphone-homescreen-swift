@@ -1,13 +1,14 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>主畫面整理</title>
-<meta name="description" content="免費的 Mac 工具：用 USB 接上 iPhone，一鍵把 App 依類型放進資料夾，先預覽再套用，隨時可以還原。" />
-<meta property="og:title" content="主畫面整理：一鍵整理 iPhone 主畫面" />
+<title>Homescreen Organizer</title>
+<meta name="description" content="A free Mac app: connect your iPhone over USB and sort your apps into folders by category in one click. Preview first, undo anytime." />
+<meta property="og:title" content="Homescreen Organizer: tidy your iPhone home screen in one click" />
 <meta property="og:image" content="https://limcheyyong.github.io/iphone-homescreen-swift/icon.png" />
-<meta property="og:description" content="用 USB 接上 Mac，App 依 App Store 類型自動放進資料夾。免費、資料不離開你的電腦。" />
+<meta property="og:description" content="Plug your iPhone into your Mac and your apps go into folders by App Store category. Free, and your data never leaves your computer." />
+<link rel="alternate" hreflang="zh-Hant" href="https://limcheyyong.github.io/iphone-homescreen-swift/zh.html" />
 <link rel="icon" href="icon.png" />
 <link rel="apple-touch-icon" href="icon.png" />
 <script>document.documentElement.classList.add('js')</script>
@@ -59,6 +60,7 @@
   nav .links { margin-left: auto; display: flex; gap: 20px; font-size: 14px; }
   nav .links a { color: var(--label-2); text-decoration: none; }
   nav .links a:hover { color: var(--label); }
+  nav .links a.lang { border: 1px solid var(--separator); border-radius: 12px; padding: 0 10px; }
   @media (max-width: 560px) { nav .links a:not(.keep) { display: none; } }
 
   /* buttons */
@@ -87,12 +89,12 @@
   .arrow { width: 28px; height: 28px; color: var(--label-3); flex: none; }
   .phone { width: 168px; padding: 7px; border-radius: 30px; background: var(--phone); box-shadow: var(--shadow); }
   .screen { aspect-ratio: 9 / 19.5; border-radius: 24px; background: var(--screen); padding: 26px 12px 12px; display: grid;
-    grid-template-columns: repeat(4, 1fr); grid-auto-rows: min-content; gap: 10px 8px; align-content: start; }
+    grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: min-content; gap: 10px 8px; align-content: start; }
   .ic { aspect-ratio: 1; border-radius: 22%; }
   .fd { aspect-ratio: 1; border-radius: 22%; background: var(--folder); padding: 12%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8%; }
   .fd i { border-radius: 25%; }
   .tile { display: flex; flex-direction: column; align-items: center; gap: 3px; }
-  .tile span { font-size: 8px; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.35); white-space: nowrap; }
+  .tile span { font-size: 8px; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.35); white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
   .tile > div { width: 100%; }
   @media (max-width: 400px) { .phone { width: 132px; } .compare { gap: 8px; } }
 
@@ -213,13 +215,14 @@
   <div class="wrap">
     <a class="brand" href="#">
       <img src="icon.png" alt="" width="28" height="28" />
-      主畫面整理
+      Homescreen Organizer
     </a>
     <div class="links">
-      <a href="#how">怎麼用</a>
-      <a href="#privacy">隱私</a>
-      <a href="#faq">常見問題</a>
-      <a class="keep" href="#support">贊助</a>
+      <a href="#how">How it works</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#faq">FAQ</a>
+      <a class="keep" href="#support">Support</a>
+      <a class="keep lang" href="zh.html" lang="zh-Hant" hreflang="zh-Hant">中文</a>
     </div>
   </div>
 </nav>
@@ -227,36 +230,36 @@
 <main>
   <div class="wrap hero">
     <div>
-      <span class="free">免費・原生 Mac App・約 1 MB</span>
-      <h1>一鍵整理<br /><em>iPhone 主畫面</em></h1>
-      <p class="lead">用 USB 線把 iPhone 接上 Mac，App 會依 App Store 類型自動放進資料夾。先在電腦上預覽、拖曳微調，滿意了再套用。</p>
+      <span class="free">Free · Native Mac app · About 1 MB</span>
+      <h1>Tidy your<br /><em>iPhone home screen</em></h1>
+      <p class="lead">Connect your iPhone to your Mac with a USB cable and your apps get sorted into folders by App Store category. Preview and fine-tune on your Mac, then apply when you are happy.</p>
       <div class="cta">
         <a class="btn" href="https://github.com/limcheyyong/iphone-homescreen-swift/releases/latest/download/Homescreen-mac.dmg" download>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
-          下載 Mac 版
+          Download for Mac
         </a>
-        <a class="btn ghost" href="#how">看看怎麼用</a>
+        <a class="btn ghost" href="#how">See how it works</a>
       </div>
-      <p class="meta">約 1 MB・macOS 13 以上・支援 Apple 晶片與 Intel Mac・需要 USB 線<br />第一次打開會被 macOS 擋下？<a href="#first-open">看怎麼開啟</a>・舊版本與更新紀錄在 <a href="https://github.com/limcheyyong/iphone-homescreen-swift/releases">GitHub</a></p>
+      <p class="meta">About 1 MB · macOS 13 or later · Apple silicon and Intel · USB cable required<br />Blocked by macOS the first time? <a href="#first-open">Here is how to open it</a> · Older versions and release notes on <a href="https://github.com/limcheyyong/iphone-homescreen-swift/releases">GitHub</a></p>
     </div>
 
-    <div class="compare" aria-label="整理前後對比示意圖">
+    <div class="compare" aria-label="Before and after illustration">
       <figure>
         <div class="phone"><div class="screen" id="before"></div></div>
-        <figcaption>整理前</figcaption>
+        <figcaption>Before</figcaption>
       </figure>
       <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       <figure>
         <div class="phone"><div class="screen" id="after"></div></div>
-        <figcaption>整理後</figcaption>
+        <figcaption>After</figcaption>
       </figure>
     </div>
   </div>
 
   <section id="how" class="alt">
     <div class="wrap center">
-      <h2>三個步驟，幾分鐘整理好</h2>
-      <p class="lead">不用在手機上一個一個拖。</p>
+      <h2>Three steps, done in minutes</h2>
+      <p class="lead">No more dragging icons one by one on your phone.</p>
       <div class="steps" style="text-align:left">
         <div class="step reveal">
           <svg class="art art-1" viewBox="0 0 240 110" aria-hidden="true">
@@ -268,14 +271,14 @@
             <path class="cable" d="M61 78v8q0 8 8 8h100q8 0 8-8v-12"/>
             <g class="ok pop"><circle cx="76" cy="20" r="9"/><path d="M72 20.5l2.8 2.8 5-5.5"/></g>
           </svg>
-          <h3>接上 iPhone</h3>
-          <p>用 USB 線連接並解鎖手機，按「讀取 iPhone」。App 會先自動備份你目前的排版。</p>
+          <h3>Connect your iPhone</h3>
+          <p>Plug in and unlock your phone, then click “Read iPhone”. Your current layout is backed up automatically.</p>
         </div>
         <div class="step reveal" style="--d:.12s">
           <svg class="art art-2 mess" viewBox="0 0 240 110" aria-hidden="true">
             <rect class="fold" x="78" y="26" width="38" height="38" rx="9" style="fill:color-mix(in srgb, var(--label-3) 35%, transparent)"/>
             <rect class="fold" x="124" y="26" width="38" height="38" rx="9" style="fill:color-mix(in srgb, var(--label-3) 35%, transparent)"/>
-            <text x="97" y="78">理財</text><text x="143" y="78">社群</text>
+            <text x="97" y="78">Finance</text><text x="143" y="78">Social</text>
             <rect class="ico" width="14" height="14" rx="4" fill="#0A84FF" style="--ax:22px;--ay:18px;--r:-12deg;--bx:82px;--by:30px"/>
             <rect class="ico" width="14" height="14" rx="4" fill="#30D158" style="--ax:196px;--ay:70px;--r:18deg;--bx:98px;--by:30px;--d:.05s"/>
             <rect class="ico" width="14" height="14" rx="4" fill="#64D2FF" style="--ax:60px;--ay:80px;--r:10deg;--bx:82px;--by:46px;--d:.1s"/>
@@ -285,8 +288,8 @@
             <rect class="ico" width="14" height="14" rx="4" fill="#BF5AF2" style="--ax:208px;--ay:30px;--r:22deg;--bx:128px;--by:46px;--d:.18s"/>
             <rect class="ico" width="14" height="14" rx="4" fill="#FFD60A" style="--ax:100px;--ay:8px;--r:-16deg;--bx:144px;--by:46px;--d:.22s"/>
           </svg>
-          <h3>一鍵分類、微調</h3>
-          <p>按「依類型分類」，理財、社群、旅遊…自動分好。不滿意可以拖曳搬移、改資料夾名稱。</p>
+          <h3>Sort in one click, then fine-tune</h3>
+          <p>Click “Sort by Category” and apps land in Finance, Social, Travel and more. Drag apps around or rename folders as you like.</p>
         </div>
         <div class="step reveal" style="--d:.24s">
           <svg class="art art-3" viewBox="0 0 240 110" aria-hidden="true">
@@ -303,8 +306,8 @@
             <rect class="pop tile-in" x="165" y="44" width="12" height="12" rx="3.5" fill="#BF5AF2" style="--d:.18s"/>
             <g class="ok pop"><circle cx="186" cy="16" r="9"/><path d="M182 16.5l2.8 2.8 5-5.5"/></g>
           </svg>
-          <h3>套用到 iPhone</h3>
-          <p>確認後寫回手機，幾秒鐘完成。不喜歡的話，一鍵還原成原本的樣子。</p>
+          <h3>Apply to your iPhone</h3>
+          <p>Confirm and it is written to your phone in seconds. Not a fan? Restore the original layout in one click.</p>
         </div>
       </div>
     </div>
@@ -312,38 +315,38 @@
 
   <section>
     <div class="wrap center">
-      <h2>放心交給它整理</h2>
-      <p class="lead">每一步都可以預覽，也都可以還原。</p>
+      <h2>Safe to hand over</h2>
+      <p class="lead">Every step can be previewed, and every change can be undone.</p>
       <div class="features" style="text-align:left">
         <div class="feature reveal">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.7M4 4v4h4"/><path d="M12 8v4l3 2"/></svg>
-          <h3>自動備份，隨時還原</h3>
-          <p>讀取時就會備份原本的排版，套用後不滿意，按一下就回到原樣。</p>
+          <h3>Automatic backup, undo anytime</h3>
+          <p>Your original layout is saved when the app reads your phone. One click brings it back.</p>
         </div>
         <div class="feature reveal" style="--d:0.1s">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
-          <h3>先預覽再套用</h3>
-          <p>新排版先在電腦上顯示，確認沒問題才會寫進手機。</p>
+          <h3>Preview before applying</h3>
+          <p>The new layout shows up on your Mac first. Nothing touches your phone until you confirm.</p>
         </div>
         <div class="feature reveal" style="--d:0.2s">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H6a3 3 0 0 0-3 3v2M16 3h2a3 3 0 0 1 3 3v2M8 21H6a3 3 0 0 1-3-3v-2M16 21h2a3 3 0 0 0 3-3v-2"/><path d="M9 12h6M12 9v6"/></svg>
-          <h3>拖曳就能微調</h3>
-          <p>App 可以拖到別的資料夾，資料夾可以改名、新增、刪除。</p>
+          <h3>Drag to fine-tune</h3>
+          <p>Drag apps between folders, and rename, add or delete folders.</p>
         </div>
         <div class="feature reveal">
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
-          <h3>Dock 和小工具不會動</h3>
-          <p>只整理你選的主畫面頁面，常用的 Dock 和小工具保持原位。</p>
+          <h3>Dock and widgets stay put</h3>
+          <p>Only the pages you pick are reorganized. Your Dock and widgets stay where they are.</p>
         </div>
         <div class="feature reveal" style="--d:0.1s">
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-          <h3>資料不離開電腦</h3>
-          <p>不用註冊、沒有帳號。排版只在你的 Mac 和 iPhone 之間處理。</p>
+          <h3>Your data stays on your Mac</h3>
+          <p>No sign-up, no account. Everything happens between your Mac and your iPhone.</p>
         </div>
         <div class="feature reveal" style="--d:0.2s">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg>
-          <h3>完全免費</h3>
-          <p>沒有廣告、沒有付費功能。覺得好用的話，可以請我喝杯咖啡。</p>
+          <h3>Completely free</h3>
+          <p>No ads, no paid features. If it helps you, you can buy me a coffee.</p>
         </div>
       </div>
     </div>
@@ -351,56 +354,56 @@
 
   <section id="download" class="alt">
     <div class="wrap center">
-      <h2>下載與第一次使用</h2>
-      <p class="lead">只需要一台 Mac、一條 USB 線和你的 iPhone。</p>
+      <h2>Download and first launch</h2>
+      <p class="lead">All you need is a Mac, a USB cable and your iPhone.</p>
       <div class="unlock" id="first-open">
         <div class="unlock-head">
-          <p class="dl-note" role="status" hidden>✓ 已開始下載。下載完成後打開 .dmg，把 App 拖進「應用程式」，再照下面三步開啟。</p>
-          <h3>第一次打開：macOS 會先擋下來，照下面做就能開啟</h3>
-          <p>這是免費工具，沒有付費向 Apple 申請開發者簽章，所以 macOS 會說「無法驗證」。這只是代表 App 沒有經過 Apple 審核，不是病毒，原始碼都公開在 <a href="https://github.com/limcheyyong/iphone-homescreen-swift">GitHub</a>。只要開放一次，之後就能直接打開。</p>
+          <p class="dl-note" role="status" hidden>✓ Your download has started. When it finishes, open the .dmg, drag the app into Applications, then follow the three steps below.</p>
+          <h3>First launch: macOS will block it once. Here is how to open it</h3>
+          <p>This is a free app without a paid Apple developer signature, so macOS says it “could not verify” it. That only means Apple has not reviewed it. It is not malware, and the source code is public on <a href="https://github.com/limcheyyong/iphone-homescreen-swift">GitHub</a>. Allow it once and it opens normally from then on.</p>
         </div>
         <ol class="unlock-steps">
           <li>
-            <div class="shot"><img src="blocked.png" alt="macOS 顯示：未打開「主畫面整理」，Apple 無法驗證是否為惡意軟體" loading="lazy" />
+            <div class="shot"><img src="blocked.png" alt="macOS dialog: the app was not opened because Apple could not verify it is free of malware" loading="lazy" />
               <span class="ring" style="left:8%;top:80%;width:41%;height:12%"></span></div>
-            <h4>按「完成」</h4>
-            <p>把 App 拖進「應用程式」後打開，看到這個視窗時按<strong>完成</strong>。<br /><strong>不要按「丟到垃圾桶」</strong>。</p>
+            <h4>Click “Done”</h4>
+            <p>Open the app from Applications. When this dialog appears, click <strong>Done</strong>.<br /><strong>Do not click “Move to Trash”</strong>.</p>
           </li>
           <li>
-            <div class="shot"><img src="open-anyway.png" alt="系統設定的隱私權與安全性頁面，安全性區塊顯示已阻擋「主畫面整理」，旁邊有強制打開按鈕" loading="lazy" />
+            <div class="shot"><img src="open-anyway.png" alt="System Settings, Privacy and Security: the Security section says the app was blocked, with an Open Anyway button" loading="lazy" />
               <span class="ring" style="left:85.5%;top:39.6%;width:11%;height:5%"></span></div>
-            <h4>到設定按「強制打開」</h4>
-            <p>打開<strong>左上角蘋果選單 → 系統設定 → 隱私權與安全性</strong>，往下捲到「安全性」，按<strong>強制打開</strong>。</p>
+            <h4>Click “Open Anyway” in Settings</h4>
+            <p>Go to <strong>Apple menu → System Settings → Privacy &amp; Security</strong>, scroll down to “Security” and click <strong>Open Anyway</strong>.</p>
           </li>
           <li>
             <div class="shot done"><img src="icon.png" alt="" width="96" height="96" /></div>
-            <h4>輸入密碼，按「打開」</h4>
-            <p>輸入 Mac 的登入密碼，再按一次<strong>打開</strong>。之後就和一般 App 一樣，點兩下就能用。</p>
+            <h4>Enter your password, click “Open”</h4>
+            <p>Enter your Mac login password and click <strong>Open</strong> once more. After that it opens like any other app.</p>
           </li>
         </ol>
       </div>
       <div class="setup">
         <div class="box">
-          <h3>下載與安裝</h3>
+          <h3>Download and install</h3>
           <ol>
-            <li>按下方的 <strong>下載 Mac 版</strong>，取得 .dmg 檔（約 1 MB）。</li>
-            <li>打開 .dmg，把「主畫面整理」拖進「應用程式」資料夾。</li>
-            <li>第一次打開時照上面的三個步驟開放權限。</li>
+            <li>Click <strong>Download for Mac</strong> below to get the .dmg (about 1 MB).</li>
+            <li>Open the .dmg and drag Homescreen Organizer into Applications.</li>
+            <li>On first launch, follow the three steps above to allow it.</li>
           </ol>
         </div>
         <div class="box">
-          <h3>連接 iPhone</h3>
+          <h3>Connect your iPhone</h3>
           <ol>
-            <li>用 <strong>USB 線</strong> 連接（Wi-Fi 不行），並解鎖手機。</li>
-            <li>第一次連接時，iPhone 會問「要信任這部電腦嗎？」，請按 <strong>信任</strong> 並輸入密碼。</li>
-            <li>在 App 裡按 <strong>讀取 iPhone</strong> 就可以開始了。</li>
+            <li>Connect with a <strong>USB cable</strong> (Wi-Fi does not work) and unlock your phone.</li>
+            <li>The first time, your iPhone asks “Trust This Computer?”. Tap <strong>Trust</strong> and enter your passcode.</li>
+            <li>Click <strong>Read iPhone</strong> in the app and you are ready to go.</li>
           </ol>
         </div>
       </div>
       <div class="cta" style="margin-top:32px">
         <a class="btn" href="https://github.com/limcheyyong/iphone-homescreen-swift/releases/latest/download/Homescreen-mac.dmg" download>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
-          下載 Mac 版
+          Download for Mac
         </a>
       </div>
     </div>
@@ -408,22 +411,22 @@
 
   <section id="privacy">
     <div class="wrap center">
-      <h2>隱私</h2>
-      <p class="lead">你的主畫面排版、App 清單和備份都只存在你自己的 Mac 上。</p>
+      <h2>Privacy</h2>
+      <p class="lead">Your home screen layout, app list and backups stay on your own Mac.</p>
       <div class="setup">
         <div class="box">
-          <h3>會連上網路的只有這兩件事</h3>
+          <h3>Only two things use the internet</h3>
           <ul>
-            <li>向 Apple 公開的 <strong>App Store 查詢服務</strong> 送出 App 的識別碼（例如 com.example.app），查詢它的類型。</li>
-            <li>你按下「請我喝杯咖啡」時，用瀏覽器開啟 Buy Me a Coffee 頁面。</li>
+            <li>App identifiers (like com.example.app) are sent to Apple’s public <strong>App Store lookup service</strong> to find each app’s category.</li>
+            <li>Clicking “Buy me a coffee” opens the Buy Me a Coffee page in your browser.</li>
           </ul>
         </div>
         <div class="box">
-          <h3>不會做的事</h3>
+          <h3>What it never does</h3>
           <ul>
-            <li>不需要註冊或登入。</li>
-            <li>不收集、不上傳你的個人資料或使用紀錄。</li>
-            <li>不讀取照片、訊息或其他 App 裡的內容。</li>
+            <li>No sign-up or login.</li>
+            <li>No collecting or uploading of personal data or usage.</li>
+            <li>No access to your photos, messages or anything inside other apps.</li>
           </ul>
         </div>
       </div>
@@ -432,39 +435,39 @@
 
   <section id="faq" class="alt">
     <div class="wrap">
-      <h2 class="center">常見問題</h2>
+      <h2 class="center">FAQ</h2>
       <div class="faq">
         <details>
-          <summary>會不會把我的主畫面弄亂？</summary>
-          <p>每次讀取都會自動備份原本的排版。套用後如果不滿意，按左邊的「還原原本排版」就會回到原樣。套用前也會先讓你預覽。</p>
+          <summary>Could it mess up my home screen?</summary>
+          <p>Every read backs up your original layout. If you do not like the result, click “Restore Original Layout” in the sidebar to go back. You also get a preview before anything is applied.</p>
         </details>
         <details>
-          <summary>為什麼 macOS 說「Apple 無法驗證是否為惡意軟體」？</summary>
-          <p>要讓 macOS 不跳這個警告，開發者每年得付 Apple 99 美元申請簽章。這個工具是免費的，目前沒有付這筆費用，所以第一次打開時需要你手動允許一次，步驟在<a href="#first-open">這裡</a>。原始碼公開在 GitHub，任何人都能檢查。如果你願意<a href="#support">贊助</a>，我會優先拿來付簽章費用，讓之後的版本不再跳出警告。</p>
+          <summary>Why does macOS say Apple “could not verify” the app?</summary>
+          <p>Avoiding that warning requires a US$99/year Apple developer membership. This app is free and does not have one yet, so you need to allow it once by hand: <a href="#first-open">see the steps</a>. The source code is public on GitHub for anyone to check. If you <a href="#support">chip in</a>, the first goal is paying for signing so future versions open without the warning.</p>
         </details>
         <details>
-          <summary>需要什麼版本的 macOS？</summary>
-          <p>macOS 13 Ventura 以上，Apple 晶片和 Intel Mac 都可以用。這是用 Swift 寫的原生 App，下載只有約 1 MB。</p>
+          <summary>Which macOS versions are supported?</summary>
+          <p>macOS 13 Ventura or later, on Apple silicon and Intel Macs. It is a native app written in Swift, so the download is only about 1 MB.</p>
         </details>
         <details>
-          <summary>有 Windows 版嗎？</summary>
-          <p>目前只支援 macOS。</p>
+          <summary>Is there a Windows version?</summary>
+          <p>Not yet. macOS only for now.</p>
         </details>
         <details>
-          <summary>可以用 Wi-Fi 連接嗎？</summary>
-          <p>不行，需要用 USB 線連接，並且手機要解鎖。</p>
+          <summary>Does it work over Wi-Fi?</summary>
+          <p>No. It needs a USB cable, and your phone must be unlocked.</p>
         </details>
         <details>
-          <summary>支援 iPad 嗎？</summary>
-          <p>目前只針對 iPhone 設計和測試。</p>
+          <summary>Does it support iPad?</summary>
+          <p>It is designed and tested for iPhone only.</p>
         </details>
         <details>
-          <summary>為什麼不能直接在網頁或 iPhone 上用？</summary>
-          <p>iOS 不允許網頁或手機上的 App 讀取或修改主畫面排版，只能透過電腦以 USB 連線處理。</p>
+          <summary>Why not a web or iPhone app?</summary>
+          <p>iOS does not let websites or iPhone apps read or change the home screen layout. It can only be done from a computer over USB.</p>
         </details>
         <details>
-          <summary>iOS 更新後不能用了怎麼辦？</summary>
-          <p>這個工具用的是 Apple 沒有公開的連線方式，iOS 改版時有可能失效。遇到問題請到 GitHub 回報，我會盡快更新。</p>
+          <summary>What if it stops working after an iOS update?</summary>
+          <p>The app relies on connection methods Apple does not document, so an iOS update could break it. Please report problems on GitHub and I will update it as soon as I can.</p>
         </details>
       </div>
     </div>
@@ -472,8 +475,8 @@
 
   <section id="support" class="support">
     <div class="wrap center">
-      <h2>覺得有幫助嗎？</h2>
-      <p class="lead">這個工具免費提供。如果它幫你省下了時間，歡迎請我喝杯咖啡，支持我繼續維護和更新。</p>
+      <h2>Did it help?</h2>
+      <p class="lead">This app is free. If it saved you some time, consider buying me a coffee to keep it maintained and updated.</p>
       <a class="bmc" href="https://www.buymeacoffee.com/jayden_lim" target="_blank" rel="noopener"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me a Coffee" /></a>
     </div>
   </section>
@@ -481,8 +484,8 @@
 
 <footer>
   <div class="wrap">
-    <p>主畫面整理是獨立開發的工具，與 Apple Inc. 沒有任何關係。iPhone、iOS、Mac、App Store 是 Apple Inc. 的商標。</p>
-    <p>使用前請確認已了解：本工具使用非公開協定修改主畫面排版，雖然會自動備份，仍請自行承擔使用風險。</p>
+    <p>Homescreen Organizer is an independent project and is not affiliated with Apple Inc. iPhone, iOS, Mac and App Store are trademarks of Apple Inc.</p>
+    <p>Please note: this app changes your home screen layout using undocumented protocols. It backs up your layout automatically, but you use it at your own risk.</p>
   </div>
 </footer>
 
@@ -497,7 +500,7 @@
     d.style.background = C[MESSY[i]];
     before.appendChild(d);
   }
-  const folders = [['理財', 2], ['社群', 4], ['旅遊', 5], ['工作', 3], ['影音', 0], ['購物', 1], ['生活', 6], ['工具', 7]];
+  const folders = [['Money', 2], ['Social', 4], ['Travel', 5], ['Work', 3], ['Media', 0], ['Shop', 1], ['Life', 6], ['Tools', 7]];  // short, like real folder labels
   const after = document.getElementById('after');
   for (const [name, c] of folders) {
     const t = document.createElement('div');

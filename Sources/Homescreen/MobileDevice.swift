@@ -52,7 +52,7 @@ enum MD {
 private func check(_ code: Int32, _ what: String) throws {
     guard code != 0 else { return }
     let hex = String(format: "0x%08X", UInt32(bitPattern: code))
-    throw DeviceError("\(what)失敗（\(hex)）。請確認 iPhone 已解鎖、用 USB 線連接，並信任這台 Mac。")
+    throw DeviceError(L("%@ failed (%@). Make sure your iPhone is unlocked, connected by USB, and trusts this Mac.", L(what), hex))
 }
 
 /// Keeps track of iPhones plugged in over USB. Notifications arrive on the main run loop.
@@ -109,14 +109,14 @@ final class Device {
     }
 
     private func open() throws {
-        try check(MD.connect(ref), "連接 iPhone")
+        try check(MD.connect(ref), "Connecting to iPhone")
         if MD.isPaired(ref) != 1 {
             _ = MD.pair(ref)  // shows "Trust This Computer?" on the phone
             _ = MD.disconnect(ref)
-            throw DeviceError("這台 Mac 還沒被 iPhone 信任：請解鎖手機，在跳出的視窗點「信任」並輸入密碼，再讀取一次。")
+            throw DeviceError(L("This Mac is not trusted by your iPhone yet. Unlock your phone, tap “Trust” in the prompt, enter your passcode, then read again."))
         }
-        try check(MD.validatePairing(ref), "驗證配對")
-        try check(MD.startSession(ref), "開始連線")
+        try check(MD.validatePairing(ref), "Validating pairing")
+        try check(MD.startSession(ref), "Starting session")
     }
 
     private func close() {
@@ -131,7 +131,7 @@ final class Device {
 
     private func springboard<T>(_ body: (Service) throws -> T) throws -> T {
         var conn: MD.Ref?
-        try check(MD.startService(ref, "com.apple.springboardservices" as CFString, nil, &conn), "啟動主畫面服務")
+        try check(MD.startService(ref, "com.apple.springboardservices" as CFString, nil, &conn), "Starting the home screen service")
         let s = Service(conn: conn!)
         defer { s.close() }
         return try body(s)
@@ -173,14 +173,14 @@ private struct Service {
     func send(_ message: [String: Any]) throws {
         let obj = message as NSDictionary
         try withExtendedLifetime(obj) {
-            try check(MD.send(conn, Unmanaged.passUnretained(obj).toOpaque(), MD.xmlFormat), "傳送資料到 iPhone")
+            try check(MD.send(conn, Unmanaged.passUnretained(obj).toOpaque(), MD.xmlFormat), "Sending data to iPhone")
         }
     }
 
     func receive() throws -> Any {
         var out: UnsafeRawPointer?
-        try check(MD.receive(conn, &out, nil), "讀取 iPhone 回應")
-        guard let out else { throw DeviceError("iPhone 沒有回應，請確認手機已解鎖。") }
+        try check(MD.receive(conn, &out, nil), "Reading the iPhone reply")
+        guard let out else { throw DeviceError(L("Your iPhone did not respond. Make sure it is unlocked.")) }
         return Unmanaged<AnyObject>.fromOpaque(out).takeRetainedValue()
     }
 

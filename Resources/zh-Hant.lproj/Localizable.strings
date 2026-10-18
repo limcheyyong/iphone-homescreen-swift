@@ -1,0 +1,174 @@
+/* Traditional Chinese. Keys are the English strings used in the source. */
+
+/* App */
+"Homescreen Organizer" = "主畫面整理";
+"Home Screen" = "主畫面";
+
+/* Sidebar */
+"Not connected" = "尚未連接";
+"Connected via USB" = "已透過 USB 連接";
+"Connect iPhone" = "連接 iPhone";
+"Organize Home Screen" = "整理主畫面";
+"Apply to iPhone" = "套用到 iPhone";
+"Read iPhone Again" = "重新讀取 iPhone";
+"Restore Original Layout" = "還原原本排版";
+"Buy Me a Coffee" = "請我喝杯咖啡";
+
+/* Toolbar */
+"View" = "檢視";
+"Current" = "目前";
+"New Layout" = "新排版";
+"Sort Options" = "分類選項";
+"Apply to iPhone…" = "套用到 iPhone…";
+"Sort by Category" = "依類型分類";
+"%ld folders, %ld apps" = "%ld 個資料夾、%ld 個 App";
+", including manual changes" = "，含手動調整";
+"New layout applied" = "已套用新排版";
+"Original layout backed up" = "已備份原本排版";
+"Close" = "關閉";
+
+/* Empty state */
+"Connect your iPhone with a USB cable" = "用 USB 線接上 iPhone";
+"Unlock your phone. The first time, your iPhone asks whether to trust this computer: tap “Trust”. Reading only backs up and shows your current layout. Nothing on the phone changes." = "解鎖手機。第一次連接時，iPhone 會問要不要信任這台電腦，請點「信任」。讀取只會備份並顯示目前的排版，不會改動手機。";
+"Read iPhone" = "讀取 iPhone";
+"Waiting for iPhone…" = "等待 iPhone 連接…";
+"iPhone detected" = "已偵測到 iPhone";
+
+/* Options */
+"Pages to organize" = "整理哪些頁面";
+"Unselected pages stay as they are. The Dock and widgets never move." = "沒選的頁面保持原樣。Dock 和小工具都不會移動。";
+"Grouping" = "分類方式";
+"Apps go into folders by App Store category, such as Finance, Travel and Social." = "依 App Store 的類型放進資料夾，例如理財、旅遊、社群。";
+"Merge smaller categories into “Other” below" = "少於幾個 App 的類型，併進「其他」";
+"Replaces your manual changes" = "會取代手動調整";
+"Sort Again" = "重新分類";
+"Create New Layout" = "產生新排版";
+
+/* Current layout */
+"Never changes" = "不會改變";
+"Organize" = "要整理";
+"Keep As Is" = "保持原樣";
+"This page will be reorganized. Click to keep it as is." = "這一頁會被重新整理，點一下改成保持原樣";
+"This page stays as is. Click to organize it." = "這一頁保持原樣，點一下改成要整理";
+"Apps" = "App";
+"Folders" = "資料夾";
+"Widgets" = "小工具";
+"Pages" = "頁面";
+"Small" = "小";
+"Medium" = "中";
+"Large" = "大";
+"Extra Large" = "特大";
+"Stack" = "堆疊";
+"Apps on Home Screen" = "主畫面上的 App";
+"Your new layout is ready" = "新排版已經準備好了";
+"Sort by category in one click" = "一鍵依類型整理";
+"Review the new layout, drag to fine-tune, then apply it to your iPhone." = "看一下新排版、拖曳微調，滿意後再套用到 iPhone。";
+"Puts apps into folders by App Store category. %@ You can preview and fine-tune before applying." = "依 App Store 類型把 App 放進資料夾。%@套用前可以先預覽和微調。";
+"View New Layout" = "查看新排版";
+"Options…" = "選項…";
+"Choose the pages to organize in Options first." = "請先在選項裡選擇要整理的頁面。";
+"Organizes %@." = "會整理%@。";
+"Organizes %@; %@ stay as they are." = "會整理%@，%@保持原樣。";
+"Page %ld" = "第 %ld 頁";
+"Folder" = "資料夾";
+
+/* Success */
+"Applied to your iPhone" = "已套用到 iPhone";
+"This is how your phone looks now. Not happy? Click “Restore Original Layout” in the sidebar." = "這是手機現在的樣子。不滿意的話，可以點左邊的「還原原本排版」。";
+"This app is free. If it helped, consider supporting it:" = "這個工具免費使用，覺得有幫助的話歡迎贊助：";
+
+/* New layout */
+"Sorted by App Store category. Drag apps to another folder, or right-click to choose where they go. Click a folder name to rename it." = "依 App Store 類型分類。把 App 拖到其他資料夾，或按右鍵選擇要移到哪裡；資料夾名稱可以直接改。";
+"New Folder" = "新資料夾";
+"Folder name" = "資料夾名稱";
+"Delete folder" = "刪除資料夾";
+"Drag apps here" = "把 App 拖到這裡";
+"%@ · %@ · was on %@" = "%1$@・%2$@・原本在%3$@";
+"Unknown category" = "未知類型";
+"Move to…" = "移到…";
+"Moved “%@” to “%@”" = "已將「%1$@」移到「%2$@」";
+"Apps from “%@” moved to “%@”" = "「%1$@」裡的 App 已移到「%2$@」";
+"Untitled" = "未命名";
+
+/* Alerts */
+"Apply the new layout to your iPhone?" = "把新排版套用到 iPhone？";
+"Creates %ld folders and organizes %ld apps." = "會建立 %1$ld 個資料夾、整理 %2$ld 個 App。";
+"The Dock will not change." = "Dock 不會改變。";
+"Unselected pages and the Dock will not change." = "沒選的頁面和 Dock 不會改變。";
+"Your original layout is backed up and can be restored anytime." = "原本的排版已經備份，隨時可以還原。";
+"Apply" = "套用";
+"Cancel" = "取消";
+"Restore the original layout?" = "還原成原本的排版？";
+"Your iPhone goes back to how it was when you first read it in this session. Changes made on the phone since then will be overwritten." = "iPhone 會回到這次第一次讀取時的樣子。讀取之後在手機上做的變更會被覆蓋。";
+"Restore" = "還原";
+
+/* Progress and messages */
+"Reading your iPhone and app icons…" = "正在讀取 iPhone 和 App 圖示…";
+"Looking up App Store categories…" = "正在查詢 App Store 類型…";
+"Writing to your iPhone…" = "正在寫入 iPhone…";
+"Restoring…" = "正在還原…";
+"Sorted by category again" = "已重新依類型分類";
+"Restored the original layout" = "已還原成原本的排版";
+"Nothing to restore yet. Read your iPhone first." = "這次還沒讀取過手機，沒有備份可以還原。";
+
+/* Errors */
+"Apple’s MobileDevice component was not found. This app needs macOS 13 or later." = "找不到 Apple 的 MobileDevice 元件，請確認這是 macOS 13 以上的版本。";
+"No iPhone found. Connect it with a USB cable and unlock it (Wi-Fi does not work)." = "沒偵測到 iPhone：請用 USB 線連接並解鎖手機（Wi-Fi 不行）。";
+"%@ failed (%@). Make sure your iPhone is unlocked, connected by USB, and trusts this Mac." = "%1$@失敗（%2$@）。請確認 iPhone 已解鎖、用 USB 線連接，並信任這台 Mac。";
+"Connecting to iPhone" = "連接 iPhone";
+"Validating pairing" = "驗證配對";
+"Starting session" = "開始連線";
+"Starting the home screen service" = "啟動主畫面服務";
+"Sending data to iPhone" = "傳送資料到 iPhone";
+"Reading the iPhone reply" = "讀取 iPhone 回應";
+"This Mac is not trusted by your iPhone yet. Unlock your phone, tap “Trust” in the prompt, enter your passcode, then read again." = "這台 Mac 還沒被 iPhone 信任：請解鎖手機，在跳出的視窗點「信任」並輸入密碼，再讀取一次。";
+"Your iPhone did not respond. Make sure it is unlocked." = "iPhone 沒有回應，請確認手機已解鎖。";
+"The iPhone returned an unexpected home screen format." = "iPhone 回傳的主畫面格式不符。";
+"App not found: %@" = "找不到 App：%@";
+"App appears twice: %@" = "App 重複出現：%@";
+
+/* Folder names written to the phone */
+"Games" = "遊戲";
+"Entertainment" = "娛樂";
+"Media" = "影音";
+"Social" = "社群";
+"Finance" = "理財";
+"Work" = "工作";
+"Utilities" = "工具";
+"Learning" = "學習";
+"Travel" = "旅遊";
+"Lifestyle" = "生活";
+"Shopping" = "購物";
+"Health" = "健康";
+"News" = "新聞";
+"Sports" = "運動";
+"Other" = "其他";
+"Apple" = "Apple 內建";
+
+/* Apple app and widget names (when the phone gives none) */
+"Messages" = "訊息";
+"Phone" = "電話";
+"Music" = "音樂";
+"Mail" = "郵件";
+"Calendar" = "行事曆";
+"Photos" = "照片";
+"Camera" = "相機";
+"Weather" = "天氣";
+"Notes" = "備忘錄";
+"Settings" = "設定";
+"Clock" = "時鐘";
+"Reminders" = "提醒事項";
+"Maps" = "地圖";
+"Batteries" = "電池";
+"Stocks" = "股市";
+"Fitness" = "健身";
+"Find My" = "尋找";
+"Podcasts" = "Podcast";
+"Home" = "家庭";
+"Shortcuts" = "捷徑";
+"Tips" = "提示";
+"Screen Time" = "螢幕使用時間";
+"Files" = "檔案";
+"Journal" = "手記";
+"Contacts" = "聯絡人";
+"Sleep" = "睡眠";

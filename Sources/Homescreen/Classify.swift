@@ -51,19 +51,22 @@ enum Classifier {
 
 enum Grouping {
     static let genres = [
-        "Games": "遊戲", "Entertainment": "娛樂", "Photo & Video": "影音", "Music": "影音", "Graphics": "影音", "Graphics & Design": "影音",
-        "Social Networking": "社群", "Finance": "理財", "Business": "工作", "Productivity": "工作",
-        "Utilities": "工具", "Developer Tools": "工具", "Education": "學習", "Reference": "學習", "Books": "學習",
-        "Travel": "旅遊", "Navigation": "旅遊", "Weather": "旅遊", "Food & Drink": "生活", "Lifestyle": "生活",
-        "Shopping": "購物", "Health & Fitness": "健康", "Medical": "健康", "News": "新聞", "Magazines": "新聞", "Sports": "運動",
+        "Games": "Games", "Entertainment": "Entertainment", "Photo & Video": "Media", "Music": "Media", "Graphics": "Media", "Graphics & Design": "Media",
+        "Social Networking": "Social", "Finance": "Finance", "Business": "Work", "Productivity": "Work",
+        "Utilities": "Utilities", "Developer Tools": "Utilities", "Education": "Learning", "Reference": "Learning", "Books": "Learning",
+        "Travel": "Travel", "Navigation": "Travel", "Weather": "Travel", "Food & Drink": "Lifestyle", "Lifestyle": "Lifestyle",
+        "Shopping": "Shopping", "Health & Fitness": "Health", "Medical": "Health", "News": "News", "Magazines": "News", "Sports": "Sports",
     ]
 
+    /// Folder names are written to the phone, so they follow the Mac's language.
+    static var other: String { L("Other") }
+
     static func type(_ a: AppMeta) -> String {
-        if let g = a.genre { return genres[g] ?? "其他" }
-        return a.bundleId.hasPrefix("com.apple.") ? "Apple 內建" : "其他"
+        if let g = a.genre { return genres[g].map(L) ?? other }
+        return a.bundleId.hasPrefix("com.apple.") ? L("Apple") : other
     }
 
-    /// One folder per type, biggest first. Types with fewer than `minSize` apps go into 其他.
+    /// One folder per type, biggest first. Types with fewer than `minSize` apps go into Other.
     static func group(_ apps: [AppMeta], minSize: Int) -> [Folder] {
         var byType: [String: [String]] = [:], order: [String] = []
         for a in apps {
@@ -71,11 +74,11 @@ enum Grouping {
             if byType[t] == nil { order.append(t) }
             byType[t, default: []].append(a.key)
         }
-        var other = byType.removeValue(forKey: "其他") ?? []
-        for (t, keys) in byType where keys.count < minSize { other += keys; byType[t] = nil }
+        var rest = byType.removeValue(forKey: other) ?? []
+        for (t, keys) in byType where keys.count < minSize { rest += keys; byType[t] = nil }
         var out = order.compactMap { t in byType[t].map { Folder(name: t, apps: $0) } }
         out.sort { $0.apps.count > $1.apps.count }
-        if !other.isEmpty { out.append(Folder(name: "其他", apps: other)) }
+        if !rest.isEmpty { out.append(Folder(name: other, apps: rest)) }
         return out
     }
 

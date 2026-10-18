@@ -1,8 +1,12 @@
-# 主畫面整理（Swift 原生版）
+# Homescreen Organizer（主畫面整理）
 
 在 Mac 上透過 USB 自動分類、整理 iPhone 主畫面。原生 SwiftUI App，下載約 1 MB。
 
-下載：https://limcheyyong.github.io/iphone-homescreen-swift/
+下載：https://limcheyyong.github.io/iphone-homescreen-swift/ （英文，預設）・https://limcheyyong.github.io/iphone-homescreen-swift/zh.html （中文）
+
+## 語言
+- App 預設英文，系統語言是中文時顯示繁體中文。原始碼裡的字串就是英文 key，中文翻譯在 `Resources/zh-Hant.lproj/Localizable.strings`；寫進手機的資料夾名稱也跟著語言。
+- 新增文字時：Text / Button 等 SwiftUI 的字串字面值會自動翻譯；其他字串用 `L("...")`，並把翻譯加進 `Localizable.strings`。
 
 ## 需求
 - macOS 13 以上（Apple 晶片或 Intel）
@@ -14,10 +18,10 @@
 swift build                          # 編譯
 swift run Homescreen                 # 開啟 App
 swift run Homescreen --probe         # 只測連線：讀取並列出主畫面，不改手機
-./scripts/package.sh                 # 打包 dist/主畫面整理.app 和 dist/Homescreen-mac.dmg（universal）
+./scripts/package.sh                 # 打包 dist/Homescreen Organizer.app 和 dist/Homescreen-mac.dmg（universal）
 ```
 
-流程：連接 iPhone → 看目前排版、按「依類型分類」產生新排版並微調 → 套用到 iPhone。讀取時會自動備份到 `~/Library/Application Support/主畫面整理/backups`，隨時能「還原原本排版」。
+流程：連接 iPhone → 看目前排版、按「依類型分類」產生新排版並微調 → 套用到 iPhone。讀取時會自動備份到 `~/Library/Application Support/Homescreen Organizer/backups`，隨時能「還原原本排版」。
 
 ## 結構
 - `Sources/Homescreen/MobileDevice.swift`：USB 連線，透過 Apple 的 MobileDevice.framework（Finder 用的同一套），配對和加密都由系統處理
@@ -25,7 +29,7 @@ swift run Homescreen --probe         # 只測連線：讀取並列出主畫面�
 - `Sources/Homescreen/Classify.swift`：用 Apple 公開的 iTunes Lookup API 查類型，依類型分組
 - `Sources/Homescreen/Model.swift`：讀取、分類、套用、還原的流程與狀態
 - `Sources/Homescreen/Views.swift`、`App.swift`：SwiftUI 介面
-- `docs/`：下載頁（GitHub Pages）
+- `docs/`：下載頁（GitHub Pages），`index.html` 英文、`zh.html` 中文
 
 ## 發佈
 1. 修改 `VERSION`，例如 `0.1.1`
