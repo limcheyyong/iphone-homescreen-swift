@@ -159,6 +159,11 @@
   /* first open: allow the unsigned app */
   .unlock { margin-top: 32px; text-align: left; background: var(--card); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow);
     border: 1px solid color-mix(in srgb, #FF9F0A 40%, transparent); }
+  .unlock { scroll-margin-top: 72px; }  /* clear the sticky nav */
+  .unlock.flash { animation: flash 1.2s ease-out 2; }
+  @keyframes flash { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, #FF9F0A 60%, transparent), var(--shadow); } 100% { box-shadow: 0 0 0 18px transparent, var(--shadow); } }
+  .dl-note { margin: 0 0 14px; padding: 10px 14px; border-radius: 10px; font-size: 15px; font-weight: 600;
+    color: #30D158; background: color-mix(in srgb, #30D158 12%, transparent); }
   .unlock-head h3 { font-size: 20px; margin-bottom: 8px; }
   .unlock-head h3::before { content: '⚠︎ '; color: #FF9F0A; }
   .unlock-head p { margin: 0; color: var(--label-2); font-size: 15px; }
@@ -350,6 +355,7 @@
       <p class="lead">只需要一台 Mac、一條 USB 線和你的 iPhone。</p>
       <div class="unlock" id="first-open">
         <div class="unlock-head">
+          <p class="dl-note" role="status" hidden>✓ 已開始下載。下載完成後打開 .dmg，把 App 拖進「應用程式」，再照下面三步開啟。</p>
           <h3>第一次打開：macOS 會先擋下來，照下面做就能開啟</h3>
           <p>這是免費工具，沒有付費向 Apple 申請開發者簽章，所以 macOS 會說「無法驗證」。這只是代表 App 沒有經過 Apple 審核，不是病毒，原始碼都公開在 <a href="https://github.com/limcheyyong/iphone-homescreen-swift">GitHub</a>。只要開放一次，之後就能直接打開。</p>
         </div>
@@ -521,6 +527,18 @@
     if (e.isIntersecting && !timer) { setTimeout(tick, 400); timer = setInterval(tick, 2600); }
     else if (!e.isIntersecting && timer) { clearInterval(timer); timer = null; sortArt.classList.add('mess'); }
   }).observe(sortArt);
+
+  // After a download click, bring up the "first open" guide: the next thing the user will need.
+  const guide = document.getElementById('first-open');
+  document.querySelectorAll('a[download]').forEach((a) => a.addEventListener('click', () => {
+    guide.querySelector('.dl-note').hidden = false;
+    setTimeout(() => {
+      guide.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' });
+      guide.classList.remove('flash');
+      void guide.offsetWidth;  // restart the highlight on repeated clicks
+      guide.classList.add('flash');
+    }, 300);
+  }));
 
   // Fade sections in as they scroll into view.
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });
