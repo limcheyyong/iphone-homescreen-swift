@@ -156,6 +156,28 @@
   .box strong { color: var(--label); font-weight: 600; }
   @media (max-width: 720px) { .setup { grid-template-columns: 1fr; } }
 
+  /* first open: allow the unsigned app */
+  .unlock { margin-top: 32px; text-align: left; background: var(--card); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow);
+    border: 1px solid color-mix(in srgb, #FF9F0A 40%, transparent); }
+  .unlock-head h3 { font-size: 20px; margin-bottom: 8px; }
+  .unlock-head h3::before { content: '⚠︎ '; color: #FF9F0A; }
+  .unlock-head p { margin: 0; color: var(--label-2); font-size: 15px; }
+  .unlock-steps { list-style: none; padding: 0; margin: 24px 0 0; display: grid; grid-template-columns: 1fr 1.5fr 1fr; align-items: start; gap: 20px; counter-reset: u; }
+  .unlock-steps li { counter-increment: u; }
+  .unlock-steps h4 { margin: 12px 0 4px; font-size: 16px; }
+  .unlock-steps h4::before { content: counter(u); display: inline-grid; place-items: center; width: 22px; height: 22px; margin-right: 8px; border-radius: 50%;
+    background: var(--accent); color: var(--on-accent); font-size: 12px; vertical-align: 2px; }
+  .unlock-steps p { margin: 0; color: var(--label-2); font-size: 14px; }
+  .unlock-steps strong { color: var(--label); }
+  .shot { position: relative; border-radius: 12px; overflow: hidden; background: #1E1E1E; }
+  .shot img { display: block; width: 100%; height: auto; }  /* natural ratio, so the ring percentages line up */
+  .shot.done { background: var(--bg-2); aspect-ratio: 540 / 484; display: grid; place-items: center; }
+  .shot.done img { width: 96px; height: 96px; }
+  .shot .ring { position: absolute; border: 3px solid #FF9F0A; border-radius: 12px; box-shadow: 0 0 0 4px color-mix(in srgb, #FF9F0A 30%, transparent);
+    animation: ring 1.6s ease-in-out infinite; pointer-events: none; }
+  @keyframes ring { 50% { box-shadow: 0 0 0 10px color-mix(in srgb, #FF9F0A 0%, transparent); } }
+  @media (max-width: 820px) { .unlock-steps { grid-template-columns: 1fr; } .unlock { padding: 20px; } }
+
   /* faq */
   .faq { max-width: 720px; margin: 32px auto 0; }
   details { border-bottom: 1px solid var(--separator); padding: 16px 0; }
@@ -210,7 +232,7 @@
         </a>
         <a class="btn ghost" href="#how">看看怎麼用</a>
       </div>
-      <p class="meta">約 1 MB・macOS 13 以上・支援 Apple 晶片與 Intel Mac・需要 USB 線<br />舊版本與更新紀錄在 <a href="https://github.com/limcheyyong/iphone-homescreen-swift/releases">GitHub</a></p>
+      <p class="meta">約 1 MB・macOS 13 以上・支援 Apple 晶片與 Intel Mac・需要 USB 線<br />第一次打開會被 macOS 擋下？<a href="#first-open">看怎麼開啟</a>・舊版本與更新紀錄在 <a href="https://github.com/limcheyyong/iphone-homescreen-swift/releases">GitHub</a></p>
     </div>
 
     <div class="compare" aria-label="整理前後對比示意圖">
@@ -326,13 +348,38 @@
     <div class="wrap center">
       <h2>下載與第一次使用</h2>
       <p class="lead">只需要一台 Mac、一條 USB 線和你的 iPhone。</p>
+      <div class="unlock" id="first-open">
+        <div class="unlock-head">
+          <h3>第一次打開：macOS 會先擋下來，照下面做就能開啟</h3>
+          <p>這是免費工具，沒有付費向 Apple 申請開發者簽章，所以 macOS 會說「無法驗證」。這只是代表 App 沒有經過 Apple 審核，不是病毒，原始碼都公開在 <a href="https://github.com/limcheyyong/iphone-homescreen-swift">GitHub</a>。只要開放一次，之後就能直接打開。</p>
+        </div>
+        <ol class="unlock-steps">
+          <li>
+            <div class="shot"><img src="blocked.png" alt="macOS 顯示：未打開「主畫面整理」，Apple 無法驗證是否為惡意軟體" loading="lazy" />
+              <span class="ring" style="left:8%;top:80%;width:41%;height:12%"></span></div>
+            <h4>按「完成」</h4>
+            <p>把 App 拖進「應用程式」後打開，看到這個視窗時按<strong>完成</strong>。<br /><strong>不要按「丟到垃圾桶」</strong>。</p>
+          </li>
+          <li>
+            <div class="shot"><img src="open-anyway.png" alt="系統設定的隱私權與安全性頁面，安全性區塊顯示已阻擋「主畫面整理」，旁邊有強制打開按鈕" loading="lazy" />
+              <span class="ring" style="left:85.5%;top:39.6%;width:11%;height:5%"></span></div>
+            <h4>到設定按「強制打開」</h4>
+            <p>打開<strong>左上角蘋果選單 → 系統設定 → 隱私權與安全性</strong>，往下捲到「安全性」，按<strong>強制打開</strong>。</p>
+          </li>
+          <li>
+            <div class="shot done"><img src="icon.png" alt="" width="96" height="96" /></div>
+            <h4>輸入密碼，按「打開」</h4>
+            <p>輸入 Mac 的登入密碼，再按一次<strong>打開</strong>。之後就和一般 App 一樣，點兩下就能用。</p>
+          </li>
+        </ol>
+      </div>
       <div class="setup">
         <div class="box">
-          <h3>第一次打開 App</h3>
+          <h3>下載與安裝</h3>
           <ol>
-            <li>下載 <strong>.dmg</strong>，把 App 拖進「應用程式」資料夾。</li>
-            <li>如果 macOS 顯示「無法打開」，到 <strong>系統設定 → 隱私權與安全性</strong>，往下找到這個 App，按 <strong>強制打開</strong>。</li>
-            <li>之後就能像一般 App 一樣直接打開。</li>
+            <li>按下方的 <strong>下載 Mac 版</strong>，取得 .dmg 檔（約 1 MB）。</li>
+            <li>打開 .dmg，把「主畫面整理」拖進「應用程式」資料夾。</li>
+            <li>第一次打開時照上面的三個步驟開放權限。</li>
           </ol>
         </div>
         <div class="box">
@@ -384,6 +431,10 @@
         <details>
           <summary>會不會把我的主畫面弄亂？</summary>
           <p>每次讀取都會自動備份原本的排版。套用後如果不滿意，按左邊的「還原原本排版」就會回到原樣。套用前也會先讓你預覽。</p>
+        </details>
+        <details>
+          <summary>為什麼 macOS 說「Apple 無法驗證是否為惡意軟體」？</summary>
+          <p>要讓 macOS 不跳這個警告，開發者每年得付 Apple 99 美元申請簽章。這個工具是免費的，目前沒有付這筆費用，所以第一次打開時需要你手動允許一次，步驟在<a href="#first-open">這裡</a>。原始碼公開在 GitHub，任何人都能檢查。如果你願意<a href="#support">贊助</a>，我會優先拿來付簽章費用，讓之後的版本不再跳出警告。</p>
         </details>
         <details>
           <summary>需要什麼版本的 macOS？</summary>
